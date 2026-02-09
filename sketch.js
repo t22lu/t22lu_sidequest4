@@ -62,7 +62,7 @@ function gameOver() {
   updateStatus("Game Over — Press R to Restart");
 }
 
-//restart game back to first wave
+//restart game back to first wave of words
 function resetGame() {
   currentWave = 0;
   isGameOver = false;
