@@ -13,10 +13,12 @@ function setup() {
   loadWave(currentWave);
 }
 
+//Create word for specific wave
 function loadWave(waveIndex) {
   words = [];
   let wave = wordData.waves[waveIndex];
 
+  //create each word using a loop
   for (let i = 0; i < wave.length; i++) {
     words.push({
       text: wave[i],
@@ -30,6 +32,7 @@ function loadWave(waveIndex) {
 function draw() {
   background(30);
 
+  //stop game if paused
   if (isPaused) {
     textAlign(CENTER, CENTER);
     textSize(32);
@@ -39,11 +42,11 @@ function draw() {
   }
 
   fill(255);
-  textSize(20);
+  textSize(30);
 
   for (let word of words) {
     word.y += word.speed;
-    text(word.text, word.x, word.y);
+    text(word.text, word.x - 50, word.y);
 
     // lose condition
     if (word.y > height) {
@@ -52,12 +55,14 @@ function draw() {
   }
 }
 
+//ends game
 function gameOver() {
   isGameOver = true;
   noLoop();
   updateStatus("Game Over — Press R to Restart");
 }
 
+//restart game back to first wave
 function resetGame() {
   currentWave = 0;
   isGameOver = false;
@@ -68,10 +73,12 @@ function resetGame() {
 }
 
 function keyTyped() {
+  //check words from first to last
   for (let i = words.length - 1; i >= 0; i--) {
     if (words[i].text[0] === key) {
       words[i].text = words[i].text.substring(1);
 
+      //removes word if fully typed
       if (words[i].text.length === 0) {
         words.splice(i, 1);
       }
@@ -88,7 +95,7 @@ function keyTyped() {
   }
 }
 
-//Changes state of game
+//Pauses and restart controls
 function keyPressed() {
   if (key === " ") {
     isPaused = !isPaused;
